@@ -2,12 +2,13 @@ class Box {
     constructor(x, y, width, height) {
         var options = {
             'restitution': 0.1,
-            'friction': 0.03,
-            'density': 0.03
+            'friction': random(0, 1),
+            'density': random(0, 1)
         }
         this.body = Bodies.rectangle(x, y, width, height, options);
         this.width = width;
         this.height = height;
+
 
         World.add(world, this.body);
     }
@@ -17,5 +18,10 @@ class Box {
         fill(random(0, 255));
         rect(pos.x, pos.y, this.width, this.height);
         pop();
+
+
+    }
+    kill(){
+        World.remove(world, this.body)
     }
 };

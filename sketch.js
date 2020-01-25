@@ -3,6 +3,13 @@ const World= Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
+var score = 0;
+var tower = "standing";
+
+var ballwidth = 100;
+var ballheight = 100;
+var ball2width = 50;
+var ball2height = 50;
 
 var gameState = "play"
 var engine, world;
@@ -20,14 +27,14 @@ var platForm;
 
 function setup(){
     var canvas = createCanvas(
-        400,
+        800,
         400
     );
     engine = Engine.create();
     world = engine.world;
 
-    ball = new Ball(100, 200, 50, 50);
-    ball2 = new Ball(100, 100, 50, 50);
+    ball = new Ball(100, 200, ballwidth, ballheight);
+    ball2 = new Ball(100, 100, ball2width, ball2height);
     platForm = new Ground(300, 200, 100, 20)
     ground = new Ground(width / 2, height, width, 20);
 
@@ -59,21 +66,68 @@ function draw(){
     slingShot.display();    
     slingShot2.display();    
 
+    if (box2.body.position.x > 400){
+        console.log("knocked")
+        if (tower = "standing"){
+            score += 1
+        }
+    }
+    if (box3.body.position.x > 400){
+        console.log("knocked")
+        if (tower = "standing"){
+            score += 1
+        }
+    }
+    if (box4.body.position.x > 400){
+        console.log("knocked")
+        if (tower = "standing"){
+            score += 1
+        }
+        // World.Composite.remove(world, box4.body)
+    }
+    if (box5.body.position.x > 400){
+        console.log("knocked")
+        if (tower = "standing"){
+            score += 1
+        }
+        // World.Composite.remove(world, box5.body)
+    }
+    if (box6.body.position.x > 400){
+        console.log("knocked")
+        if (tower = "standing"){
+            score += 1
+        }
+        // World.Composite.remove(world, box6.body)
+    }
+
+    if (box2.body.position.x > 350 && box3.body.position.x > 350 && box4.body.position.x > 350 && box5.body.position.x > 350 && box6.body.position.x > 400 || box2.body.position.x < 300 && box3.body.position.x < 300&& box4.body.position.x  < 300&& box5.body.position.x < 300 && box6.body.position.x <300  ){
+        tower = "fallen"
+
+        console.log("fallen")
+        if (frameCount % 60 == 0){
+        alert("congratulations you just knocked the tower with  the balls in just one try")   
+        alert("Your score is " + score)
+        alert("Thank you for not exiting this program, thus your score will keep increasing as long as you dont exit this program")
+        }
+     }
 
    
 }
 
 function mouseDragged(){
-    if (gameState == "play"){
     Matter.Body.setPosition(ball.body, {x : mouseX, y : mouseY});
     Matter.Body.setPosition(ball2.body, {x : mouseX, y : mouseY - 200});
     line(mouseX, mouseY, pmouseX, pmouseY);
-    } else{
-        alert("Your chance is over! If you want to play again, just refresh this page!")
-    }
+    ballwidth = random(10, 250);
+    ballheight = random(10, 250);
+    ball2height = random(10, 255);
+    ball2width = random(10, 255)
 }
 
 function mouseReleased(){
     slingShot.fly();
     slingShot2.fly();
 }
+
+
+
